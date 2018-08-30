@@ -16,7 +16,7 @@
 
 ## Contributing
 
-1. git fetch origin develop
-2. git checkout develop
+1. `git fetch origin develop`
+2. `git checkout develop`
 3. ???
-4. git push origin develop
+4. `git push origin develop`
