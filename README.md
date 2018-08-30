@@ -3,6 +3,7 @@
 
 * nodejs
 * npm
+* Xcode
 
 ## Set up your environment
 
