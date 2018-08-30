@@ -26,11 +26,14 @@ export default class LeadsList extends Component {
     }
   }
 
-  navigateDetail(id) {
+  navigateDetail(item) {
     return () => {
       this.props.navigation.navigate(
         'Lead',
-        { id: id }
+        {
+          id: item.Id,
+          title: `${item.FirstName} ${item.LastName}`,
+        }
       );
     }
   }
@@ -49,7 +52,7 @@ export default class LeadsList extends Component {
             ]
           )
         } else {
-          this.navigateDetail(item.Id)();
+          this.navigateDetail(item)();
         }
       });
     }

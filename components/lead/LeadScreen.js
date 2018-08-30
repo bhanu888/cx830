@@ -9,6 +9,10 @@ import {GlobalStyles} from '../layout/GlobalStyles';
 import {Api} from '../data/Api';
 
 export default class LeadScreen extends Component {
+  static navigationOptions = ({navigation}) => ({
+    title: navigation.state.params.title,
+  });
+
   constructor(props) {
     super(props);
     this.state = {data: []};

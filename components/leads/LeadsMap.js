@@ -13,15 +13,6 @@ export default class LeadsMap extends Component {
     this.props = props;
   }
 
-  onCalloutPress(id) {
-    return () => {
-      this.props.navigation.navigate(
-        'Lead',
-        { id: id }
-      );
-    }
-  }
-
   onAcceptLead(id, userId) {
     return () => {
       Api.sfdcUpdateLead(id, 'Working - Contacted', userId)
@@ -32,11 +23,14 @@ export default class LeadsMap extends Component {
     }
   }
 
-  navigateDetail(id) {
+  navigateDetail(item) {
     return () => {
       this.props.navigation.navigate(
         'Lead',
-        { id: id }
+        {
+          id: item.Id,
+          title: `${item.FirstName} ${item.LastName}`,
+        }
       );
     }
   }
@@ -55,7 +49,7 @@ export default class LeadsMap extends Component {
             ]
           )
         } else {
-          this.navigateDetail(item.Id)();
+          this.navigateDetail(item)();
         }
       });
     }
@@ -82,7 +76,7 @@ export default class LeadsMap extends Component {
           coordinate={marker.latlng}
           title={marker.title}
           description={marker.description}
-          onCalloutPress={this.onPressItem.bind(this)(marker.item)}
+          onCalloutPress={this.navigateDetail(marker.item).bind(this)}
         />
       ))}
       </MapView>
