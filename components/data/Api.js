@@ -32,7 +32,21 @@ export const Api = {
     oauth.logout();
   },
 
-  sdfcOpenLeads: () => new Promise((res, rej) => {
+  sfdcOpenLeads: () => new Promise((res, rej) => {
+    store.get(STORE_SDFC_CREDENTIALS)
+      .then((credentials) => {
+        const query = 'SELECT Id, FirstName, LastName, ' +
+          'mobilephone, phone, email, ' +
+          'company, address, status, ' +
+          'lead.owner.firstname, lead.owner.lastname, ' +
+          'productinterest__c FROM Lead ' +
+          'WHERE status=\'Open - Not Contacted\'';
+        net.query(query, res, rej);
+      })
+      .catch(rej);
+  }),
+
+  sfdcMyLeads: () => new Promise((res, rej) => {
     store.get(STORE_SDFC_CREDENTIALS)
       .then((credentials) => {
         const query = 'SELECT Id, FirstName, LastName, ' +
@@ -41,9 +55,17 @@ export const Api = {
           'lead.owner.firstname, lead.owner.lastname, ' +
           'productinterest__c FROM Lead ' +
           `WHERE lead.owner.Id='${credentials.userId}' ` +
-          'AND status<>\'Open-Not Contacted\'';
+          'AND status<>\'Open - Not Contacted\'';
         net.query(query, res, rej);
       })
       .catch(rej);
-  })
+  }),
+
+  sfdcRetrieveLead: (id) => new Promise((res, rej) => {
+    store.get(STORE_SDFC_CREDENTIALS)
+      .then((credentials) => {
+
+      })
+      .catch(rej);
+  }),
 };

@@ -5,12 +5,12 @@ import {
   View,
   Button,
 } from 'react-native';
-import {oauth, net} from 'react-native-force';
 import {GlobalStyles} from '../layout/GlobalStyles';
+import {Api} from '../data/Api';
 
 export default class SettingsScreen extends Component {
   onPressLogout() {
-    oauth.logout();
+    Api.logout();
   }
 
   render() {

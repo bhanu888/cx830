@@ -7,7 +7,6 @@ import {
 } from 'react-native';
 import {GlobalStyles} from '../layout/GlobalStyles';
 import {Api} from '../data/Api';
-import {oauth, net} from 'react-native-force';
 
 export default class LeadsListScreen extends Component {
   constructor(props) {
@@ -26,10 +25,10 @@ export default class LeadsListScreen extends Component {
       })
     }
 
-    fetchData() {
-      var that = this;
-      Api.sdfcOpenLeads()
-        .then((response) => that.setState({data: response.records}));
+  fetchData() {
+    var that = this;
+    Api.sdfcOpenLeads()
+      .then((response) => that.setState({data: response.records}));
   }
 
   render() {
