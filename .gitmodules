@@ -1,0 +1,6 @@
+[submodule "mobile_sdk/SalesforceMobileSDK-Android"]
+	path = mobile_sdk/SalesforceMobileSDK-Android
+	url = https://github.com/forcedotcom/SalesforceMobileSDK-Android.git
+[submodule "mobile_sdk/SalesforceMobileSDK-iOS"]
+	path = mobile_sdk/SalesforceMobileSDK-iOS
+	url = https://github.com/forcedotcom/SalesforceMobileSDK-iOS.git
