@@ -6,6 +6,7 @@ import {
   Button,
 } from 'react-native';
 import {oauth, net} from 'react-native-force';
+import {GlobalStyles} from '../layout/GlobalStyles';
 
 export default class SettingsScreen extends Component {
   onPressLogout() {
@@ -14,7 +15,7 @@ export default class SettingsScreen extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={GlobalStyles.container}>
         <Button
           style={styles.item}
           onPress={this.onPressLogout}
@@ -26,13 +27,4 @@ export default class SettingsScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: 'white',
-    },
-    item: {
-        padding: 10,
-        fontSize: 18,
-        height: 44,
-    }
 });

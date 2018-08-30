@@ -6,6 +6,7 @@ import {
   FlatList,
 } from 'react-native';
 import {oauth, net} from 'react-native-force';
+import {GlobalStyles} from '../layout/GlobalStyles';
 
 export default class AgendaScreen extends Component {
   constructor(props) {
@@ -34,10 +35,10 @@ export default class AgendaScreen extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={GlobalStyles.container}>
       <FlatList
         data={this.state.data}
-        renderItem={({item}) => <Text style={styles.item}>{item.Name}</Text>}
+        renderItem={({item}) => <Text style={GlobalStyles.flatListItem}>{item.Name}</Text>}
         keyExtractor={(item, index) => 'key_' + index}
       />
       </View>
@@ -46,13 +47,4 @@ export default class AgendaScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: 'white',
-    },
-    item: {
-        padding: 10,
-        fontSize: 18,
-        height: 44,
-    }
 });

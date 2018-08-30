@@ -25,6 +25,9 @@
  */
 
 import React from 'react';
+import {YellowBox} from 'react-native';
 import {RootStackNavigator} from './components/layout/RootStackNavigator';
+
+YellowBox.ignoreWarnings(['Warning: isMounted(...) is deprecated', 'Module RCTImageLoader']);
 
 export const App = RootStackNavigator;
