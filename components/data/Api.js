@@ -15,7 +15,7 @@ export const Api = {
         res(credentials);
       },
       () => {
-        authenticate()
+        Api.authenticate()
           .then(res)
           .catch(rej);
       }

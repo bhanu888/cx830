@@ -1,11 +1,17 @@
 import React from 'react';
 import {StackNavigator} from 'react-navigation';
 import {RootTabNavigator} from './RootTabNavigator';
+import LoadingScreen from '../pre/LoadingScreen';
 
 export const RootStackNavigator = StackNavigator({
-  Root: RootTabNavigator
+  Loading: LoadingScreen,
+  Root: {
+    screen: ({navigation}) => (
+      <RootTabNavigator screenProps={{rootNavigation: navigation}} />
+    ),
+  }
 }, {
-  initialRouteName: 'Root',
+  initialRouteName: 'Loading',
   headerMode: 'none',
   navigationOptions: {
     headerVisible: false,

@@ -12,6 +12,8 @@ export default class AgendaScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {data: []};
+    console.log(props)
+
   }
 
   componentDidMount() {
