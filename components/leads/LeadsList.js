@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {
   Alert,
   FlatList,
+  StyleSheet,
   Text,
   TouchableWithoutFeedback,
   View
@@ -60,8 +61,9 @@ export default class LeadsList extends Component {
         data={this.props.data}
         renderItem={({item}) => (
           <TouchableWithoutFeedback onPress={this.onPressItem.bind(this)(item)}>
-            <View>
-              <Text style={GlobalStyles.flatListItem}>{item.FirstName}</Text>
+            <View style={GlobalStyles.flatListSummaryItem}>
+              <Text style={GlobalStyles.flatListTitle}>{item.FirstName} {item.LastName}</Text>
+              <Text style={GlobalStyles.flatListDescription}>{item.Address.street}, {item.Address.city} {item.Address.country}</Text>
             </View>
           </TouchableWithoutFeedback>
         )}

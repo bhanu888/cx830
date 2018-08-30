@@ -22,7 +22,6 @@ export default class LeadsMap extends Component {
     }
   }
 
-
   onAcceptLead(id, userId) {
     return () => {
       Api.sfdcUpdateLead(id, 'Working - Contacted', userId)

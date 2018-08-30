@@ -8,7 +8,7 @@ import LeadScreen from '../lead/LeadScreen';
 import SettingsScreen from '../settings/SettingsScreen';
 import {Api} from '../data/Api';
 import {Button} from 'react-native';
-
+import Icon from 'react-native-vector-icons/Ionicons';
 
 export const RootTabNavigator = TabNavigator({
   Agenda: {
@@ -48,5 +48,32 @@ export const RootTabNavigator = TabNavigator({
         screen: SettingsScreen,
       }]
     }),
+  },
+}, {
+  navigationOptions: ({ navigation }) => ({
+    tabBarIcon: ({ focused, tintColor }) => {
+      const { routeName } = navigation.state;
+      let iconName;
+      switch (routeName) {
+        case 'Agenda':
+          iconName = 'ios-calendar';
+          break;
+        case 'MyLeads':
+          iconName = 'ios-list-box';
+          break;
+        case 'OpenLeads':
+          iconName = 'ios-folder-open';
+          break;
+        case 'Settings':
+          iconName = 'ios-cog';
+          break;
+      }
+
+      return <Icon name={iconName} size={28} color={tintColor} />;
+    },
+  }),
+  tabBarOptions: {
+    activeTintColor: '#2e77bb',
+    inactiveTintColor: 'gray',
   },
 });

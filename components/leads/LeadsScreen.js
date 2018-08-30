@@ -9,8 +9,6 @@ import {Api} from '../data/Api';
 import LeadsList from './LeadsList';
 import LeadsMap from './LeadsMap';
 
-let isList = false;
-
 export default class LeadsScreen extends Component {
   constructor(props) {
     super(props);
@@ -24,14 +22,18 @@ export default class LeadsScreen extends Component {
   }
 
   setIsList(b) {
-    isList = !isList;
-    this.setState({ isList: isList });
+    this.setState({ isList: b });
     this.fetchData();
   }
 
   componentDidMount() {
     var that = this;
     this.props.navigation.setParams({ setIsList: this.setIsList.bind(this) });
+    this.props.navigation.addListener('didFocus', this.authThenFetch.bind(this));
+  }
+
+  authThenFetch() {
+    var that = this;
     Api.getAuthCredentials()
       .then((credentials) => {
         that.fetchData();
@@ -73,10 +75,19 @@ export default class LeadsScreen extends Component {
   }
 
   render() {
-    const listView = <LeadsList {...this.props} fetchDataFn={this.fetchData.bind(this)} data={this.state.data} />;
-    const mapView = <LeadsMap {...this.props} fetchDataFn={this.fetchData.bind(this)} passMapRef={this.passMapRef.bind(this)} style={styles.mapView} data={this.state.data} markers={this.state.markers} />;
+    const listView = <LeadsList {...this.props}
+      fetchDataFn={this.fetchData.bind(this)}
+      data={this.state.data}
+    />;
+    const mapView = <LeadsMap {...this.props}
+      fetchDataFn={this.fetchData.bind(this)}
+      passMapRef={this.passMapRef.bind(this)}
+      style={styles.mapView}
+      data={this.state.data}
+      markers={this.state.markers}
+    />;
     let view;
-    if (isList) {
+    if (this.state.isList) {
       view = listView;
     } else {
       view = mapView;

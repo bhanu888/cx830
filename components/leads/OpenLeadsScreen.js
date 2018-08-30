@@ -2,14 +2,21 @@ import React, {Component} from 'react';
 import {Button} from 'react-native'
 import LeadsScreen from './LeadsScreen';
 import {Api} from '../data/Api';
+import Icon from 'react-native-vector-icons/Ionicons';
+
+let isList = false;
 
 const HeaderButton = ({setIsList}) => {
   return (
-    <Button
+    <Icon.Button
       onPress={() => {
-        setIsList();
+        isList = !isList;
+        setIsList(isList);
       }}
-      title="Toggle Map"
+      name="ios-eye"
+      color="gray"
+      underlayColor="transparent"
+      backgroundColor="transparent"
     />
   );
 };

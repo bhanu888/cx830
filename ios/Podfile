@@ -45,6 +45,8 @@ pod 'react-native-google-maps', path: rn_maps_path  # Remove this line if you do
 pod 'GoogleMaps'  # Remove this line if you don't want to support GoogleMaps on iOS
 pod 'Google-Maps-iOS-Utils' # Remove this line if you don't want to support GoogleMaps on iOS
 
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
 end
 
 # Fix for xcode9/fmdb/sqlcipher/cocoapod issue - see https://discuss.zetetic.net/t/ios-11-xcode-issue-implicit-declaration-of-function-sqlite3-key-is-invalid-in-c99/2198/27
