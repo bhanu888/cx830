@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 
 import {
   StyleSheet,
+  Text,
   View,
 } from 'react-native';
 import {GlobalStyles} from '../layout/GlobalStyles';
@@ -11,10 +12,12 @@ export default class LeadScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {data: []};
+    this.id = null;
   }
 
   componentDidMount() {
     var that = this;
+    this.id = this.props.navigation.state.params.id;
     Api.getAuthCredentials()
       .then((credentials) => {
         that.fetchData();
@@ -25,10 +28,19 @@ export default class LeadScreen extends Component {
   }
 
   fetchData() {
-    Api.sdfcRetrieveLead(id)
+    var that = this;
+    Api.sfdcRetrieveLead(this.id)
       .then((response) => {
         console.log(response);
         that.setState({data: response})
       });
+  }
+
+  render() {
+    return (
+      <View style={GlobalStyles.container}>
+        <Text>{this.state.data.FirstName} {this.state.data.LastName}</Text>
+      </View>
+    );
   }
 }

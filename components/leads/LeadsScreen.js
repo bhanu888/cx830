@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {
+  Alert,
   StyleSheet,
   View,
 } from 'react-native';
@@ -13,6 +14,7 @@ let isList = false;
 export default class LeadsScreen extends Component {
   constructor(props) {
     super(props);
+    this.props = props;
     this.state = {data: [], markers: [], isList: false};
     this.mapRef = null;
   }
@@ -59,6 +61,7 @@ export default class LeadsScreen extends Component {
           description: `${r.Address.street},
             ${r.Address.city}
             ${r.Address.country}`,
+          item: r,
         }));
         markerIds = markers.map(r => r.id);
 
@@ -70,8 +73,8 @@ export default class LeadsScreen extends Component {
   }
 
   render() {
-    const listView = <LeadsList data={this.state.data} />;
-    const mapView = <LeadsMap passMapRef={this.passMapRef.bind(this)} style={styles.mapView} data={this.state.data} markers={this.state.markers} />;
+    const listView = <LeadsList {...this.props} fetchDataFn={this.fetchData.bind(this)} data={this.state.data} />;
+    const mapView = <LeadsMap {...this.props} fetchDataFn={this.fetchData.bind(this)} passMapRef={this.passMapRef.bind(this)} style={styles.mapView} data={this.state.data} markers={this.state.markers} />;
     let view;
     if (isList) {
       view = listView;

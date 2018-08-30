@@ -1,6 +1,10 @@
 import React, {Component} from 'react';
-import {StyleSheet} from 'react-native';
+import {
+  Alert,
+  StyleSheet
+} from 'react-native';
 import MapView, {Marker} from 'react-native-maps';
+import {Api} from '../data/Api';
 import {GlobalStyles} from '../layout/GlobalStyles';
 
 export default class LeadsMap extends Component {
@@ -8,6 +12,56 @@ export default class LeadsMap extends Component {
     super(props);
     this.props = props;
   }
+
+  onCalloutPress(id) {
+    return () => {
+      this.props.navigation.navigate(
+        'Lead',
+        { id: id }
+      );
+    }
+  }
+
+
+  onAcceptLead(id, userId) {
+    return () => {
+      Api.sfdcUpdateLead(id, 'Working - Contacted', userId)
+        .then(() => {
+          this.props.fetchDataFn();
+        })
+        .catch(console.log);
+    }
+  }
+
+  navigateDetail(id) {
+    return () => {
+      this.props.navigation.navigate(
+        'Lead',
+        { id: id }
+      );
+    }
+  }
+
+  onPressItem(item) {
+    return () => {
+      Api.getSfdcCredentials().then((credentials) => {
+        const isOpenItem = item.Status === 'Open - Not Contacted';
+        if (isOpenItem) {
+          Alert.alert(
+            'Accept Lead',
+            'Are you sure you want to accept this lead?',
+            [
+              { 'text': 'Cancel', style: 'cancel' },
+              { 'text': 'Accept', onPress: this.onAcceptLead.bind(this)(item.Id, credentials.userId) }
+            ]
+          )
+        } else {
+          this.navigateDetail(item.Id)();
+        }
+      });
+    }
+  }
+
 
   render() {
     return (
@@ -29,6 +83,7 @@ export default class LeadsMap extends Component {
           coordinate={marker.latlng}
           title={marker.title}
           description={marker.description}
+          onCalloutPress={this.onPressItem.bind(this)(marker.item)}
         />
       ))}
       </MapView>
