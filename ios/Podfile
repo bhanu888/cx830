@@ -2,6 +2,8 @@ platform :ios, '10.0'
 
 project 'CX830.xcodeproj'
 target 'CX830' do
+rn_path = '../node_modules/react-native'
+rn_maps_path = '../node_modules/react-native-maps'
 
 source 'https://github.com/CocoaPods/Specs.git'
 
@@ -10,6 +12,7 @@ pod 'DoubleConversion', :podspec => '../node_modules/react-native/third-party-po
 pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
 pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 pod 'React', :path => '../node_modules/react-native', :subspecs => [
+    'Core',
     'DevSupport',
     'tvOS',
     'jschelpers',
@@ -21,6 +24,7 @@ pod 'React', :path => '../node_modules/react-native', :subspecs => [
     'RCTCameraRoll',
     'RCTGeolocation',
     'RCTImage',
+    'RCTLinkingIOS',
     'RCTNetwork',
     'RCTPushNotification',
     'RCTSettings',
@@ -36,10 +40,26 @@ pod 'SmartStore', :path => '../mobile_sdk/SalesforceMobileSDK-iOS'
 pod 'SmartSync', :path => '../mobile_sdk/SalesforceMobileSDK-iOS'
 pod 'SalesforceReact', :path => '../mobile_sdk/SalesforceMobileSDK-iOS'
 
+pod 'react-native-maps', path: rn_maps_path
+pod 'react-native-google-maps', path: rn_maps_path  # Remove this line if you don't want to support GoogleMaps on iOS
+pod 'GoogleMaps'  # Remove this line if you don't want to support GoogleMaps on iOS
+pod 'Google-Maps-iOS-Utils' # Remove this line if you don't want to support GoogleMaps on iOS
+
 end
 
 # Fix for xcode9/fmdb/sqlcipher/cocoapod issue - see https://discuss.zetetic.net/t/ios-11-xcode-issue-implicit-declaration-of-function-sqlite3-key-is-invalid-in-c99/2198/27
 post_install do | installer |
+  installer.pods_project.targets.each do |target|
+    if target.name == 'react-native-google-maps'
+      target.build_configurations.each do |config|
+        config.build_settings['CLANG_ENABLE_MODULES'] = 'No'
+      end
+    end
+    if target.name == "React"
+      target.remove_from_project
+    end
+  end
+
   print "SQLCipher: link Pods/Headers/sqlite3.h"
   system "mkdir -p Pods/Headers/Private && ln -s ../../SQLCipher/sqlite3.h Pods/Headers/Private"
 end

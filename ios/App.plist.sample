@@ -6,5 +6,7 @@
 	<string>cx830:///mobilesdk/detect/oauth/done</string>
 	<key>sfdcRemoteAccessConsumerKey</key>
 	<string></string>
+	<key>googleMapsApiKey</key>
+	<string></string>
 </dict>
 </plist>

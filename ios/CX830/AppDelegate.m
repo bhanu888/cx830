@@ -34,6 +34,7 @@
 #import <SalesforceSDKCore/SFUserAccountManager.h>
 #import <SalesforceReact/SalesforceReactSDKManager.h>
 #import <SalesforceSDKCore/SFLoginViewController.h>
+@import GoogleMaps;
 
 @implementation AppDelegate
 
@@ -41,13 +42,13 @@
 {
     self = [super init];
     if (self) {
-        NSDictionary *keysDict = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"App" ofType:@"plist"]];
+        self.keysDict = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"App" ofType:@"plist"]];
 
         // Need to use SalesforceReactSDKManager in Salesforce Mobile SDK apps using React Native
         [SalesforceSDKManager setInstanceClass:[SalesforceReactSDKManager class]];
 
-        [SalesforceSDKManager sharedManager].appConfig.remoteAccessConsumerKey = keysDict[@"sfdcRemoteAccessConsumerKey"];
-        [SalesforceSDKManager sharedManager].appConfig.oauthRedirectURI = keysDict[@"sfdcOAuthRedirectURI"];
+        [SalesforceSDKManager sharedManager].appConfig.remoteAccessConsumerKey = self.keysDict[@"sfdcRemoteAccessConsumerKey"];
+        [SalesforceSDKManager sharedManager].appConfig.oauthRedirectURI = self.keysDict[@"sfdcOAuthRedirectURI"];
         [SalesforceSDKManager sharedManager].appConfig.oauthScopes = [NSSet setWithArray:@[ @"web", @"api" ]];
         // Uncomment the following line if you don't want login to happen when the application launches
         [SalesforceSDKManager sharedManager].appConfig.shouldAuthenticate = NO;
@@ -92,6 +93,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [GMSServices provideAPIKey:self.keysDict[@"googleMapsApiKey"]];
     self.launchOptions = launchOptions;
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     [self initializeAppViewState];

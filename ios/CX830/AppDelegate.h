@@ -28,5 +28,6 @@
 
 @property (nonatomic, strong) UIWindow *window;
 @property (nonatomic, strong) NSDictionary *launchOptions;
+@property (nonatomic, strong) NSDictionary *keysDict;
 
 @end

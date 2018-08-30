@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import {Api} from '../data/Api';
 import {oauth, net} from 'react-native-force';
+import MapView from 'react-native-maps';
 
 export default class LeadsMapScreen extends Component {
   constructor(props) {
@@ -34,10 +35,14 @@ export default class LeadsMapScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-      <FlatList
-        data={this.state.data}
-        renderItem={({item}) => <Text style={styles.item}>{item.FirstName}</Text>}
-        keyExtractor={(item, index) => 'key_' + index}
+      <MapView
+        style={{flex: 1}}
+        initialRegion={{
+          latitude: 37.78825,
+          longitude: -122.4324,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        }}
       />
       </View>
     );
