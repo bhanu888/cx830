@@ -1,12 +1,18 @@
 import React, {Component} from 'react';
 
 import {
+  Button,
+  Linking,
+  Picker,
   StyleSheet,
   Text,
   View,
 } from 'react-native';
 import {GlobalStyles} from '../layout/GlobalStyles';
 import {Api} from '../data/Api';
+
+const SDFC_LEAD_STATUS_CLOSED_CONVERTED = "Closed - Converted";
+const SDFC_LEAD_STATUS_CLOSED_NOT_CONVERTED = "Closed - Not Converted";
 
 export default class LeadScreen extends Component {
   static navigationOptions = ({navigation}) => ({
@@ -15,7 +21,7 @@ export default class LeadScreen extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {data: []};
+    this.state = {data: {Address: {}}, selectedStatus: ''};
     this.id = null;
   }
 
@@ -31,11 +37,35 @@ export default class LeadScreen extends Component {
       });
   }
 
+  onPressCall() {
+    const url = `tel:${this.state.data.Phone}`;
+    Linking.canOpenURL(url).then(supported => {
+      if (supported) {
+        Linking.openURL(url);
+      }
+    });
+  }
+
+  onPickerValueChange(v, i) {
+    this.setState({selectedStatus: v});
+  }
+
+  onPressSave() {
+    var that = this;
+    Api.sfdcUpdateLead(this.id, this.state.selectedStatus)
+      .then((response) => {
+        if (this.state.selectedStatus === SDFC_LEAD_STATUS_CLOSED_CONVERTED) {
+          this.props.navigation.navigate('Digital Form', {
+            data: this.state.data,
+          });
+        }
+      });
+  }
+
   fetchData() {
     var that = this;
     Api.sfdcRetrieveLead(this.id)
       .then((response) => {
-        console.log(response);
         that.setState({data: response})
       });
   }
@@ -44,7 +74,24 @@ export default class LeadScreen extends Component {
     return (
       <View style={GlobalStyles.container}>
         <Text>{this.state.data.FirstName} {this.state.data.LastName}</Text>
+        <Text>{this.state.data.Address.street}, {this.state.data.Address.city} {this.state.data.Address.country}</Text>
+        <Button title="Call" onPress={this.onPressCall.bind(this)} />
+        <Picker
+          selectedValue={this.state.selectedStatus}
+          onValueChange={this.onPickerValueChange.bind(this)}>
+          <Picker.Item
+            label={SDFC_LEAD_STATUS_CLOSED_CONVERTED}
+            value={SDFC_LEAD_STATUS_CLOSED_CONVERTED} />
+          <Picker.Item
+            label={SDFC_LEAD_STATUS_CLOSED_NOT_CONVERTED}
+            value={SDFC_LEAD_STATUS_CLOSED_NOT_CONVERTED} />
+        </Picker>
+        <Button title="Save" onPress={this.onPressSave.bind(this)} />
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+
+});

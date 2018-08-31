@@ -59,7 +59,7 @@ export default class LeadsScreen extends Component {
             latitude: r.Address.latitude,
             longitude: r.Address.longitude
           },
-          title: `${r.FirstName} ${r.LastName}`,
+          title: `${r.FirstName} ${r.LastName} - ${r.Company}`,
           description: `${r.Address.street},
             ${r.Address.city}
             ${r.Address.country}`,

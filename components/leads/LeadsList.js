@@ -32,7 +32,7 @@ export default class LeadsList extends Component {
         'Lead',
         {
           id: item.Id,
-          title: `${item.FirstName} ${item.LastName}`,
+          title: `${item.Company}`,
         }
       );
     }
@@ -65,7 +65,7 @@ export default class LeadsList extends Component {
         renderItem={({item}) => (
           <TouchableWithoutFeedback onPress={this.onPressItem.bind(this)(item)}>
             <View style={GlobalStyles.flatListSummaryItem}>
-              <Text style={GlobalStyles.flatListTitle}>{item.FirstName} {item.LastName}</Text>
+              <Text style={GlobalStyles.flatListTitle}>{item.FirstName} {item.LastName} - {item.Company}</Text>
               <Text style={GlobalStyles.flatListDescription}>{item.Address.street}, {item.Address.city} {item.Address.country}</Text>
             </View>
           </TouchableWithoutFeedback>

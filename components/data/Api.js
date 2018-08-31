@@ -59,7 +59,7 @@ export const Api = {
           'lead.owner.Id, lead.owner.firstname, lead.owner.lastname, ' +
           'productinterest__c FROM Lead ' +
           `WHERE lead.owner.Id='${credentials.userId}' ` +
-          'AND status<>\'Open - Not Contacted\'';
+          'AND status=\'Working - Contacted\'';
         net.query(query, res, rej);
       })
       .catch(rej);
@@ -74,13 +74,12 @@ export const Api = {
   }),
 
   sfdcUpdateLead: (id, status, ownerId) => new Promise((res, rej) => {
-    console.log(ownerId);
+    const data = {}
+    if (status) data['status'] = status;
+    if (ownerId) data['OwnerId'] = ownerId;
     store.get(STORE_SFDC_CREDENTIALS)
       .then((credentials) => {
-        net.update('Lead', id, {
-          'status': status,
-          'OwnerId': ownerId,
-        }, res, rej)
+        net.update('Lead', id, data, res, rej);
       })
       .catch(rej);
   }),

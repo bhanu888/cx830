@@ -6,6 +6,7 @@ import MyLeadsScreen from '../leads/MyLeadsScreen';
 import OpenLeadsScreen from '../leads/OpenLeadsScreen';
 import LeadScreen from '../lead/LeadScreen';
 import SettingsScreen from '../settings/SettingsScreen';
+import DigitalForm from '../digital_form/DigitalForm';
 import {Api} from '../data/Api';
 import {Button} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -38,6 +39,9 @@ export const RootTabNavigator = TabNavigator({
       }, {
         name: 'Lead',
         screen: LeadScreen,
+      }, {
+        name: 'Digital Form',
+        screen: DigitalForm,
       }]
     }),
   },

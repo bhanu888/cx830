@@ -9,7 +9,7 @@ export const RootStackNavigator = StackNavigator({
     screen: ({navigation}) => (
       <RootTabNavigator screenProps={{rootNavigation: navigation}} />
     ),
-  }
+  },
 }, {
   initialRouteName: 'Loading',
   headerMode: 'none',

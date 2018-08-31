@@ -29,7 +29,7 @@ export default class LeadsMap extends Component {
         'Lead',
         {
           id: item.Id,
-          title: `${item.FirstName} ${item.LastName}`,
+          title: `${item.Company}`,
         }
       );
     }
