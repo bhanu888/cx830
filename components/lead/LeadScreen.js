@@ -58,6 +58,8 @@ export default class LeadScreen extends Component {
           this.props.navigation.navigate('Digital Form', {
             data: this.state.data,
           });
+        } else {
+          this.props.navigation.goBack();
         }
       });
   }
