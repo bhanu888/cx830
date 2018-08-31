@@ -24,5 +24,12 @@ export const GlobalStyles = StyleSheet.create({
   flatListDescription: {
     fontSize: 12,
     color: 'gray'
-  }
+  },
+  header: {
+    fontSize: 23,
+  },
+  subheader: {
+    fontSize: 20,
+    color: 'gray',
+  },
 });
