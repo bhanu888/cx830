@@ -76,7 +76,7 @@ export default class LeadsMap extends Component {
           coordinate={marker.latlng}
           title={marker.title}
           description={marker.description}
-          onCalloutPress={this.navigateDetail(marker.item).bind(this)}
+          onCalloutPress={this.onPressItem(marker.item).bind(this)}
         />
       ))}
       </MapView>
